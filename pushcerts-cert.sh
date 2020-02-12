@@ -12,7 +12,7 @@ DESTINATION_USER=tomdaniel
 DESTINATION_PATH=/etc/cockpit/ws-certs.d/
 DESTINATION_CER_NAME=$CERT_NAME.cert
 
-cat /cf/conf/acme/$CERT_NAME.cer >> /cf/conf/acme/$CERT_NAME.cert
+cat /cf/conf/acme/$CERT_NAME.crt >> /cf/conf/acme/$CERT_NAME.cert
 cat /cf/conf/acme/$CERT_NAME.key >> /cf/conf/acme/$CERT_NAME.cert
 
 scp /cf/conf/acme/$CERT_NAME.cert $DESTINATION_USER@$DESTINATION_SERVER:$DESTINATION_PATH$DESTINATION_CER_NAME
