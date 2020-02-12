@@ -5,6 +5,9 @@
 #    ssh-copy-id -i ~/.ssh/id_rsa.pub user@server
 #Communication on TCP port 22 bewtween pfsense and the destintion  is required for the script to work
 
+#Pause  the script for 90 seconds before executuing
+sleep 90
+
 #Set the variables
 
 #CERT_NAME is the the name of the certificate as set in pfSense
