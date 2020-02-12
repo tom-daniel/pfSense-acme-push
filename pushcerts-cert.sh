@@ -16,13 +16,17 @@ DESTINATION_CER_NAME=$CERT_NAME.cert
 cat /cf/conf/acme/$CERT_NAME.crt >> /cf/conf/acme/$CERT_NAME.cert
 cat /cf/conf/acme/$CERT_NAME.key >> /cf/conf/acme/$CERT_NAME.cert
 
+chown tomdaniel /cf/conf/acme/$CERT_NAME.cert
+chmod 660 /cf/conf/acme/$CERT_NAME.cert
 
 #ensure the destination file can be overwritten
-ssh $DESTINATION_USER@$DESTINATION_SERVER chmod 660 /cf/conf/acme/$CERT_NAME.cert
+#ssh $DESTINATION_USER@$DESTINATION_SERVER chmod -R 777 /etc/cockpit/ws-certs.d
 
 #transfer the file
 scp /cf/conf/acme/$CERT_NAME.cert $DESTINATION_USER@$DESTINATION_SERVER:$DESTINATION_PATH$DESTINATION_CER_NAME
 
+#ensure the destination file stays able to be overwritten
+#ssh $DESTINATION_USER@$DESTINATION_SERVER chmod -R 777 /etc/cockpit/ws-certs.d
 
 #clean up pfsense
 rm /cf/conf/acme/$CERT_NAME.cert
