@@ -6,15 +6,23 @@
 #Communication on TCP port 22 bewtween pfsense and the destintion  is required for the script to work
 
 #Set the variables
-CERT_NAME=wildcard.the-daniels.co.uk
+CERT_NAME=mysql1.the-daniels-lets-encrypt-cert
 DESTINATION_SERVER=mysql1.the-daniels.co.uk
 DESTINATION_USER=tomdaniel
 DESTINATION_PATH=/etc/cockpit/ws-certs.d/
 DESTINATION_CER_NAME=$CERT_NAME.cert
 
+#merge the files
 cat /cf/conf/acme/$CERT_NAME.crt >> /cf/conf/acme/$CERT_NAME.cert
 cat /cf/conf/acme/$CERT_NAME.key >> /cf/conf/acme/$CERT_NAME.cert
 
+
+#ensure the destination file can be overwritten
+ssh $DESTINATION_USER@$DESTINATION_SERVER chmod 660 /cf/conf/acme/$CERT_NAME.cert
+
+#transfer the file
 scp /cf/conf/acme/$CERT_NAME.cert $DESTINATION_USER@$DESTINATION_SERVER:$DESTINATION_PATH$DESTINATION_CER_NAME
 
+
+#clean up pfsense
 rm /cf/conf/acme/$CERT_NAME.cert
